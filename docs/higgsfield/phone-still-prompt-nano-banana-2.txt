@@ -1,0 +1,9 @@
+Static vertical frame: redraw image 1, a restaurant order counter, as hand-drawn 2D anime. Keep its exact composition, angle and framing: red woven lanterns top left and top right, red drinks fridge left, lit sign on the dark back wall, illuminated menu panels on the counter front, one staff member behind the counter on the right.
+
+Style and palette: clean uniform-weight linework, flat cel shading, subtle 2D glow on lanterns, sign and menu panels; lacquer red close to #D7261E, warm amber lantern light, deep warm-brown shadows close to #1C1A17.
+
+The staff member becomes the same original anime character as in image 3: short black hair, small red chilli hair clip, navy polo, small closed-mouth smile. Draw a new face; the blur in image 1 is a privacy mask.
+
+The sign copies image 2's lettering exactly: white brush calligraphy "三国冒菜", a red seal with a stylised "3", "Kingdoms" in bold white under a thin white line.
+
+Plain red fridge, no logo. Only what image 1 shows. Original design, not based on any existing anime, manga or game. Anatomically correct, all limbs visible and naturally positioned.
