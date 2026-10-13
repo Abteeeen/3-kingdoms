@@ -64,7 +64,8 @@ export function boot(cfg) {
       const [sx, sy, scale] = parse(mobile() && sec.dataset.bowlM ? sec.dataset.bowlM : sec.dataset.bowl);
       active = sec; last = '';
       const s = { sx, sy, scale };
-      if (sec.dataset.drop) s.drop = +sec.dataset.drop;
+      const drop = mobile() && sec.dataset.dropM ? sec.dataset.dropM : sec.dataset.drop;
+      if (drop) s.drop = +drop;
       if (sec.dataset.steam) s.steam = +sec.dataset.steam;
       bowl.set(s);
     };
@@ -79,6 +80,7 @@ export function boot(cfg) {
     gsap.from(lines, { yPercent: 105, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.07, delay: 0.15 });
   }
 
+  intro();
   fitText(); addEventListener('resize', fitText); if (document.fonts) document.fonts.ready.then(() => { fitText(); ScrollTrigger.refresh(); });
   ScrollTrigger.refresh();
   clockAndStatus(); setInterval(clockAndStatus, 1000);
@@ -172,4 +174,25 @@ function toast(msg) {
   let t = document.getElementById('toast');
   if (!t) { t = document.createElement('div'); t.id = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
   t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// Intro film: our own walk-in footage. Phone gets the portrait cut. It plays once, then the seal stamps on.
+function intro() {
+  const sec = document.getElementById('intro'); if (!sec) return;
+  const v = document.getElementById('intro-video'), nav = document.getElementById('topnav');
+  const phone = matchMedia('(max-width: 760px)').matches;
+  v.poster = phone ? v.dataset.posterP : v.dataset.posterD;
+  v.src = phone ? v.dataset.srcP : v.dataset.srcD;
+  const end = () => sec.classList.add('ended');
+  v.addEventListener('ended', end);
+  v.addEventListener('error', end);
+  if (reduce) end(); else v.play().catch(end);
+  document.getElementById('intro-replay').addEventListener('click', () => { sec.classList.remove('ended'); v.currentTime = 0; v.play().catch(end); });
+  new IntersectionObserver(([e]) => { if (!e.isIntersecting) v.pause(); else if (!sec.classList.contains('ended') && !reduce) v.play().catch(() => {}); }).observe(sec);
+  if (!reduce) {
+    gsap.from('[data-load-i], .intro-wm > span', { yPercent: 60, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.08, delay: 0.25 });
+    gsap.to('.intro-media', { yPercent: 16, scale: 1.06, ease: 'none', scrollTrigger: { trigger: sec, start: 'top top', end: 'bottom top', scrub: true } });
+    gsap.to('.intro-copy, .intro-foot, .seal', { yPercent: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: sec, start: '35% top', end: 'bottom top', scrub: true } });
+  }
+  ScrollTrigger.create({ trigger: sec, start: 'bottom 70px', onEnter: () => nav.classList.add('solid'), onLeaveBack: () => nav.classList.remove('solid') });
 }

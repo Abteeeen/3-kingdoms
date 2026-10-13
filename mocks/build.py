@@ -3,6 +3,7 @@
 
 Usage: python3 mocks/build.py   (writes mocks/dist/variant-a.html and variant-b.html)
 """
+import base64
 import json
 import re
 import urllib.parse
@@ -27,6 +28,7 @@ VARIANTS = {
         "skin": "skin-a.css",
         "fonts": "family=Big+Shoulders+Display:wght@900&family=Zilla+Slab:wght@400;600;700",
         "cjk": "ZCOOL+QingKe+HuangYou",
+        "intro": True,
         "bowl": {"style": "ink", "bowlColor": 0x1C1A17, "rimColor": 0xD7261E, "inkColor": 0x1C1A17,
                  "steamColor": 0xFBFAF7, "food": FOOD},
     },
@@ -50,6 +52,15 @@ def module_js(cfg):
 
 def build(key, v):
     body = (SRC / "body.html").read_text().replace("{{VARIANT}}", v["flag"])
+    if v.get("intro"):
+        # The chosen variant opens with the walk-in film: a fixed top bar replaces the wordmark header.
+        vid = Path(__file__).parent / "video" / "out"
+        b64 = lambda p: "data:image/jpeg;base64," + base64.b64encode(p.read_bytes()).decode()
+        intro = (SRC / "intro.html").read_text().replace("{{POSTER_D}}", b64(vid / "poster-desktop.jpg")).replace("{{POSTER_P}}", b64(vid / "poster-phone.jpg"))
+        head_end = body.index("</header>") + len("</header>")
+        nav, section = intro.split("</header>", 1)
+        body = body[:body.index('<header class="top"')] + nav + "</header>" + body[head_end:]
+        body = body.replace('<main id="main">', '<main id="main">\n' + section, 1)
     cjk = "".join(sorted({c for c in body if "一" <= c <= "鿿"}))
     css = (SRC / "base.css").read_text() + "\n" + (SRC / v["skin"]).read_text()
     head = [
@@ -68,5 +79,7 @@ def build(key, v):
     print(out, len(html) // 1024, "KB", "cjk:", cjk)
 
 
-for k, v in VARIANTS.items():
-    build(k, v)
+# Variant B is frozen at its published version; the studio chose A on 13 Oct 2026.
+import sys as _sys
+for k in (_sys.argv[1:] or ["a"]):
+    build(k, VARIANTS[k])

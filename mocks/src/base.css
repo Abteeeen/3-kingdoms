@@ -34,6 +34,8 @@ p { text-wrap: pretty; }
 .hero { min-height: 82svh; display: grid; grid-template-rows: 1fr auto; padding-block: clamp(32px, 7vh, 80px) 28px; }
 .hero-copy { max-width: min(46rem, 52vw); align-self: center; display: grid; gap: 24px; }
 .stage, .step-caption, .swipe { display: none; }
+.hero { position: relative; }
+.stage-d { position: absolute; right: 3vw; top: 50%; width: 44vw; height: 56vh; transform: translateY(-50%); pointer-events: none; }
 .dockets { display: contents; }
 .statement .ln { display: block; overflow: hidden; padding-bottom: .06em; }
 .statement [data-load] { display: inline-block; }
