@@ -1,0 +1,66 @@
+/* Variant B: the reference's language. White page, one chilli red for everything, plain sans with italic serif accents, mono labels. */
+:root {
+  --bg: #FFFFFF; --bg-solid: #FFFFFF; --fg: #CF1B2B; --focus: #1E1A19;
+  --red: #CF1B2B; --on-red: #FFFFFF; --rule: rgba(207, 27, 43, .32);
+  --open: #2E8B3A; --closed: #CF1B2B;
+  --col-bg: #CF1B2B; --col-fg: #FFFFFF; --roll: #FFFFFF;
+  --paper: #FFFFFF; --paper-fg: #CF1B2B; --perf: rgba(207, 27, 43, .45);
+  --clip-bg: #FBE3E0; --clip-fg: #CF1B2B; --clip-stripe: rgba(207, 27, 43, .12);
+  --steam-bg: radial-gradient(60% 50% at 22% 30%, #FFD8C6 0%, transparent 70%), radial-gradient(55% 55% at 78% 62%, #FFC9BD 0%, transparent 70%), radial-gradient(70% 60% at 50% 100%, #FFE9DE 0%, transparent 75%), #FFF6F1;
+  --bar-bg: #FFFFFF;
+  --f-body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-em: "Instrument Serif", "Noto Serif SC", Georgia, serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+em { font-family: var(--f-em); font-style: italic; font-weight: 400; letter-spacing: -.005em; }
+[lang="zh-Hans"] { font-family: "Noto Serif SC", var(--f-em); font-style: normal; }
+
+.wm { color: var(--red); }
+.wm-zhi { display: none; }
+.wm-en { font: 600 120px/.78 var(--f-body); letter-spacing: -.055em; }
+.navrow { color: var(--red); }
+
+.statement, .big { font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 3.3rem); line-height: 1.04; letter-spacing: -.02em; }
+.statement em, .big em { font-size: 1.08em; }
+.huge { font-weight: 400; font-size: clamp(3rem, 8vw, 7.5rem); line-height: .92; letter-spacing: -.035em; }
+.huge em { display: block; padding-left: .08em; }
+
+.btn-primary { background: var(--red); color: var(--on-red); border-radius: 999px; font-weight: 500; }
+.btn-primary:hover { background: #A8121F; }
+.btn-oval, .pill { border: 1px solid var(--red); border-radius: 50%; padding: 10px 26px; font: italic 400 1.15rem/1 var(--f-em); color: var(--red); background: transparent; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
+.btn-oval:hover { background: var(--red); color: var(--on-red); }
+
+.manifesto .big { font-size: clamp(1.7rem, 3vw, 2.8rem); }
+.clip { border-radius: 2px; }
+
+.col h3 { font-weight: 400; }
+.col.on { background: #A8121F; }
+.process .pr-line { font-size: 1rem; }
+
+.add { border: 1px solid var(--red); border-radius: 999px; color: var(--red); }
+.add:hover { background: var(--red); color: #fff; }
+
+.steam-line { color: var(--red); font-weight: 400; font-size: clamp(2.2rem, 5.4vw, 4.6rem); line-height: 1; letter-spacing: -.03em; }
+.docket, .myticket { border-radius: 18px; box-shadow: 0 1px 0 rgba(207,27,43,.08), 0 24px 40px -28px rgba(120, 20, 20, .45); }
+.docket:nth-child(1) { transform: rotate(-1.5deg); } .docket:nth-child(3) { transform: rotate(1.2deg); }
+.d-top h3 { font-size: 2rem; font-weight: 400; }
+.d-top p { font-size: .92rem; }
+.d-bot { position: relative; }
+.d-bot::before, .d-bot::after { content: ""; position: absolute; top: -11px; width: 20px; height: 20px; border-radius: 50%; background: #FFEDE5; }
+.d-bot::before { left: -10px; } .d-bot::after { right: -10px; }
+.btn.wide { border-radius: 8px; }
+.myticket h3 { font: italic 400 2rem/1 var(--f-em); }
+
+.quotes blockquote { font: italic 400 clamp(1.4rem, 2.4vw, 2.1rem)/1.12 var(--f-em); }
+.quotes blockquote[lang="zh-Hans"] { font-style: normal; font-size: clamp(1.2rem, 2vw, 1.7rem); }
+
+.spice-knob { background: var(--red); color: #fff; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.spice-knob:focus-visible { outline: none; filter: drop-shadow(0 0 0 #1E1A19) drop-shadow(0 0 3px #1E1A19); }
+.ct-copy .big { font-size: clamp(2rem, 4vw, 3.4rem); }
+
+.qs summary { font-weight: 400; }
+.foot-wm { color: var(--red); font: 600 100px/.8 var(--f-body); letter-spacing: -.05em; }
+.foot-wm [lang], .foot-wm span { font-family: inherit; }
+.phonebar { border-top: 1px solid var(--rule); }
+.phonebar .pb-main { background: var(--red); color: #fff; border-radius: 999px; }
+.phonebar a:not(.pb-main), .phonebar button { color: var(--red); }

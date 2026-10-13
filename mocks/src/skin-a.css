@@ -1,0 +1,85 @@
+/* Variant A: Broadside. Takeaway-bag kraft, carbon ink wood type, chilli red overprinted a hair off-register, square everything. */
+:root {
+  --kraft: #C9A57B; --ink: #1C1A17; --red: #D7261E; --green: #6F8A2A; --paper-c: #FBFAF7;
+  --grain: radial-gradient(rgba(60, 40, 20, .11) 1px, transparent 1.4px) 0 0 / 7px 7px;
+  --bg: #C9A57B; --bg-solid: var(--grain), #C9A57B; --fg: #1C1A17; --focus: #1C1A17;
+  --rule: rgba(28, 26, 23, .55); --open: #6F8A2A; --closed: #D7261E;
+  --col-bg: #1C1A17; --col-fg: #FBFAF7; --roll: #D7261E;
+  --paper: #FBFAF7; --paper-fg: #1C1A17; --perf: rgba(28, 26, 23, .5);
+  --clip-bg: #1C1A17; --clip-fg: #FBFAF7; --clip-stripe: rgba(215, 38, 30, .35);
+  --steam-bg: var(--grain), #D7261E;
+  --bar-bg: #C9A57B;
+  --f-body: "Zilla Slab", Georgia, serif;
+  --f-disp: "Big Shoulders Display", Impact, "Arial Narrow", sans-serif;
+  --f-zh: "ZCOOL QingKe HuangYou", "Noto Sans SC", sans-serif;
+  --f-mono: "Zilla Slab", Georgia, serif;
+}
+body { background: var(--grain), var(--kraft); }
+@media (min-width: 761px) { .hero-copy { max-width: min(46rem, 50vw); } }
+em { font-style: normal; color: var(--red); mix-blend-mode: multiply; text-shadow: .035em .03em 0 rgba(111, 138, 42, .5); }
+[lang="zh-Hans"] { font-family: var(--f-zh); }
+
+.wm { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; border-bottom: 4px solid var(--ink); padding-bottom: 8px; }
+.wm-zhi { font: 400 .92em/1 var(--f-zh); margin-right: .18em; vertical-align: .02em; }
+.wm-en { font: 900 100px/.8 var(--f-disp); }
+.navrow { font-weight: 700; text-transform: uppercase; letter-spacing: .04em; font-size: .78rem; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+
+.statement, .big, .huge, .steam-line, .col h3, .d-top h3, .myticket h3 { font-family: var(--f-disp); font-weight: 900; text-transform: uppercase; letter-spacing: .005em; }
+.statement { font-size: clamp(2.6rem, 6.6vw, 6.2rem); line-height: .86; }
+.statement .ln { border-bottom: 3px solid var(--ink); }
+.big { font-size: clamp(2rem, 4.6vw, 4rem); line-height: .9; }
+.huge { font-size: clamp(3.4rem, 11vw, 10rem); line-height: .84; border-bottom: 4px solid var(--ink); padding-bottom: 6px; }
+.hero-meta, .proof, .label, .status, .ab, .tags, .num, .need, .bracket, .spice-ends, .d-price, .d-code, .tear, .quotes figcaption, .route li::before, .dishes .n { font-family: var(--f-body); font-weight: 700; text-transform: uppercase; }
+
+.btn { font: 900 1.25rem/1 var(--f-disp); text-transform: uppercase; letter-spacing: .02em; border: 3px solid var(--ink); }
+.btn-primary { background: var(--red); color: var(--paper-c); }
+.btn-primary:hover { background: var(--ink); }
+.btn-oval, .pill { background: transparent; color: var(--ink); border: 3px solid var(--ink); }
+.btn-oval:hover { background: var(--ink); color: var(--kraft); }
+.pill { font: 900 1rem/1 var(--f-disp); text-transform: uppercase; padding: 8px 12px; display: inline-block; }
+
+.clip { border: 3px solid var(--ink); }
+.col { border-top: 6px solid var(--red); }
+.col h3 { font-size: clamp(1.6rem, 3vw, 2.8rem); }
+.col.on { background: #000; }
+.col em { mix-blend-mode: normal; text-shadow: none; color: var(--red); }
+.weigh { font-family: var(--f-disp); font-weight: 900; font-size: clamp(2.2rem, 4.5vw, 4rem); }
+.roller polygon { stroke-width: 3; }
+
+.dishes li { border-top: 2px solid var(--ink); }
+.dishes .d { font: 900 clamp(1.4rem, 2.6vw, 2.3rem)/.95 var(--f-disp); text-transform: uppercase; }
+.dishes .d [lang] { font-size: .8em; }
+.dishes .p { font: 900 clamp(1.4rem, 2.6vw, 2.2rem)/1 var(--f-disp); }
+.add { border: 3px solid var(--ink); font: 900 1rem/1 var(--f-disp); text-transform: uppercase; }
+.add:hover { background: var(--red); color: var(--paper-c); }
+
+.steam { color: var(--paper-c); }
+.steam-line { color: var(--paper-c); font-size: clamp(3rem, 9vw, 8.4rem); line-height: .84; max-width: 12ch; }
+.steam-line em { color: var(--ink); mix-blend-mode: normal; text-shadow: none; }
+.docket, .myticket { border: 3px solid var(--ink); box-shadow: 8px 8px 0 var(--ink); }
+.d-top h3 { font-size: 2.4rem; line-height: .9; }
+.d-top h3 em { color: var(--red); }
+.myticket h3 { font-size: 2rem; }
+
+.quotes blockquote { font: 600 clamp(1.25rem, 2.2vw, 1.9rem)/1.18 var(--f-body); }
+.quotes figure { border-top: 4px solid var(--ink); padding-top: 14px; }
+
+.hours th, .hours td { border-top: 2px solid var(--ink); font-weight: 600; }
+.story .big { max-width: 22ch; }
+
+.spice-track::before { border-top: 3px solid var(--ink); }
+.stop { background: var(--ink); width: 12px; height: 12px; border-radius: 0; }
+.spice-knob { background: var(--red); color: var(--paper-c); border: 3px solid var(--ink); border-radius: 50%; box-shadow: 4px 4px 0 var(--ink); }
+.spice-knob span { font: 900 .78rem/1 var(--f-disp); }
+
+.qs details { border-top: 2px solid var(--ink); }
+.qs summary { font: 900 clamp(1.3rem, 2.4vw, 2rem)/1 var(--f-disp); text-transform: uppercase; }
+.foot { border-top: 4px solid var(--ink); }
+.foot-wm { font: 900 100px/.8 var(--f-disp); }
+.foot-wm span { font-family: var(--f-disp); }
+.mockflag { background: var(--ink); color: var(--kraft); font-family: var(--f-body); font-weight: 700; }
+.phonebar { border-top: 3px solid var(--ink); }
+.phonebar .pb-main { background: var(--red); color: var(--paper-c); border: 3px solid var(--ink); font: 900 1.1rem/1 var(--f-disp); text-transform: uppercase; }
+.phonebar a:not(.pb-main), .phonebar button { border: 3px solid var(--ink); font: 900 1rem/1 var(--f-disp); text-transform: uppercase; }
+
+@media (max-width: 760px) { .statement { font-size: 2.35rem; } .hero { min-height: 100svh; } }
