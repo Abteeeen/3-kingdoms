@@ -1,0 +1,9 @@
+node_modules/
+.next/
+out/
+dist/
+.env*
+.DS_Store
+research/clips/source/
+.impeccable/questions/
+.impeccable/config.local.json
