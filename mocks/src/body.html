@@ -14,9 +14,10 @@
 </header>
 
 <main id="main">
-  <section class="hero" id="hero" data-bowl="0.5,-0.18,1" data-bowl-m="0,-0.6,0.66" data-drop="0" data-steam="1">
+  <section class="hero" id="hero" data-bowl="0.5,-0.18,1" data-bowl-m="0,0,0.74" data-anchor-m=".stage" data-drop="0" data-steam="1">
     <div class="hero-copy">
       <h2 class="statement"><span class="ln"><span data-load>Sichuan mini hotpot,</span></span><span class="ln"><span data-load>weighed to order,</span></span><span class="ln"><span data-load><em>six levels of heat.</em></span></span></h2>
+      <div class="stage" aria-hidden="true"></div>
       <div class="cta-row">
         <a class="btn btn-primary" href="#tickets">Build your order</a>
         <a class="btn btn-oval" href="#find">Find us</a>
@@ -45,6 +46,7 @@
     <div class="pr-top">
       <p class="ab"><span>Fridge</span><span aria-hidden="true">→</span><span>Bowl</span></p>
       <p class="pr-line">Four steps from the fridge <em>to your bowl.</em></p>
+      <p class="step-caption" id="step-caption" aria-live="polite"></p>
       <span class="pill">How it works</span>
     </div>
     <svg id="roller" class="roller" viewBox="0 0 1000 120" aria-hidden="true"><line x1="0" y1="60" x2="1000" y2="60"/><polygon points=""/><circle cx="0" cy="60" r="4"/></svg>
@@ -73,7 +75,9 @@
 
   <section class="steam" id="tickets" data-bowl="0,0,0">
     <h2 class="steam-line">Broth made fresh, <em>every single day.</em></h2>
+    <p class="swipe">Swipe for more bowls</p>
     <div class="ticket-grid">
+      <div class="dockets">
       <article class="docket">
         <div class="d-top"><h3><em>Signature</em></h3><p>Our signature broth with vegetables, your choice of three proteins, and steamed rice.</p><ul><li>Set bowl</li><li>Six heat levels</li><li>May contain nuts</li></ul></div>
         <div class="d-bot"><p class="d-price"><span>Counter price</span><b>$20.80</b></p><button type="button" class="btn btn-primary wide" data-add="Signature Mini Hotpot|20.80">Add to my ticket</button><div class="barcode" aria-hidden="true"></div><p class="d-code">3K/BOWL.01 · SIG</p></div>
@@ -86,7 +90,8 @@
         <div class="d-top"><h3><em>Your own</em></h3><p>Fill a bowl from the fridge. We weigh it, cook it in the broth and spice it your way.</p><ul><li>500g or 1000g</li><li>Priced by weight</li><li>Rice not included</li></ul></div>
         <div class="d-bot"><p class="d-price"><span>Counter price</span><b>By weight</b></p><button type="button" class="btn btn-primary wide" data-add="Build-your-own bowl|counter">Add to my ticket</button><div class="barcode" aria-hidden="true"></div><p class="d-code">3K/BOWL.03 · DIY</p></div>
       </article>
-      <aside class="myticket" aria-labelledby="mt-h">
+      </div>
+      <aside class="myticket" id="myticket" aria-labelledby="mt-h">
         <h3 id="mt-h">My ticket</h3>
         <ul id="ticket-lines"><li class="empty">Add a bowl to start.</li></ul>
         <p class="mt-total"><span>Total so far</span><b id="ticket-total">$0.00</b></p>
@@ -134,11 +139,12 @@
     <p class="big"><span lang="zh-Hans">三国</span> means Three Kingdoms. Mao cai comes from Chengdu, capital of Shu, one of the three. <em>The rest of the story is in the bowl.</em></p>
   </section>
 
-  <section class="contact" id="contact" data-bowl="-0.42,-0.02,0.95" data-bowl-m="0,-0.62,0.6" data-drop="1">
+  <section class="contact" id="contact" data-bowl="-0.42,-0.02,0.95" data-bowl-m="0,0,0.68" data-anchor-m=".stage" data-drop="1">
     <div class="ct-copy">
       <span class="pill">Ready?</span>
       <h2 class="big">Ready for lunch? <em>Pick your heat.</em></h2>
       <p class="small">Drag the chilli to set your spice level and watch the broth change. The real level names come from the counter.</p>
+      <div class="stage" aria-hidden="true"></div>
       <div class="spice">
         <div id="spice-track" class="spice-track"><span class="stop"></span><span class="stop"></span><span class="stop"></span><span class="stop"></span><span class="stop"></span><span class="stop"></span>
           <button type="button" id="spice-knob" class="spice-knob" role="slider" aria-label="Spice level" aria-valuemin="1" aria-valuemax="6" aria-valuenow="3"><span>Drag me</span></button>

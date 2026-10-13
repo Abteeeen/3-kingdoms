@@ -11,6 +11,7 @@ export function boot(cfg) {
 
   // ---------- smooth scroll (Lenis) wired to ScrollTrigger, per gsap-scrolltrigger guidance ----------
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
   if (!reduce && window.Lenis) {
     const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
@@ -27,6 +28,8 @@ export function boot(cfg) {
     const steps = [...proc.querySelectorAll('.step')];
     const weight = document.getElementById('weight');
     const roller = document.getElementById('roller');
+    const caption = document.getElementById('step-caption');
+    let shown = -1;
     const update = p => {
       proc.style.setProperty('--p', p.toFixed(4));
       const drop = clamp(p / 0.38), w = clamp((p - 0.3) / 0.25), sp = clamp((p - 0.55) / 0.25);
@@ -34,6 +37,7 @@ export function boot(cfg) {
       if (weight) weight.textContent = String(Math.round(w * 500)).padStart(3, '0') + 'g';
       const active = p < 0.3 ? 0 : p < 0.55 ? 1 : p < 0.82 ? 2 : 3;
       steps.forEach((s, i) => s.classList.toggle('on', i === active));
+      if (caption && shown !== active) { shown = active; const st = steps[active]; caption.textContent = st.querySelector('h3').textContent + ': ' + [...st.querySelectorAll('p:not(.weigh)')].map(p => p.textContent).join(' '); }
       if (roller) drawRoller(roller, p);
     };
     if (reduce) { update(1); proc.classList.add('static'); }
@@ -42,10 +46,23 @@ export function boot(cfg) {
   }
 
   // ---------- bowl placement per section ----------
+  // A section can anchor the bowl to an element (data-anchor / data-anchor-m); the bowl then follows it as the page scrolls.
   const parse = s => s.split(',').map(Number);
+  let active = null, last = '';
+  const anchorOf = sec => sec && (mobile() ? sec.dataset.anchorM : sec.dataset.anchor);
+  const follow = () => {
+    const sel = anchorOf(active); if (!sel) return;
+    const el = active.querySelector(sel); if (!el) return;
+    const r = el.getBoundingClientRect();
+    const sx = ((r.left + r.width / 2) / innerWidth) * 2 - 1, sy = -(((r.top + r.height / 2) / innerHeight) * 2 - 1);
+    const key = sx.toFixed(3) + sy.toFixed(3); if (key === last) return; last = key;
+    bowl.set({ sx, sy });
+  };
+  gsap.ticker.add(follow);
   document.querySelectorAll('[data-bowl]').forEach(sec => {
     const apply = () => {
       const [sx, sy, scale] = parse(mobile() && sec.dataset.bowlM ? sec.dataset.bowlM : sec.dataset.bowl);
+      active = sec; last = '';
       const s = { sx, sy, scale };
       if (sec.dataset.drop) s.drop = +sec.dataset.drop;
       if (sec.dataset.steam) s.steam = +sec.dataset.steam;
@@ -54,7 +71,7 @@ export function boot(cfg) {
     ScrollTrigger.create({ trigger: sec, start: 'top 55%', end: 'bottom 45%', onEnter: apply, onEnterBack: apply });
   });
   const first = document.querySelector('[data-bowl]');
-  if (first) { const [sx, sy, scale] = parse(mobile() && first.dataset.bowlM ? first.dataset.bowlM : first.dataset.bowl); bowl.set({ sx, sy, scale, drop: 0 }); }
+  if (first) { active = first; const [sx, sy, scale] = parse(mobile() && first.dataset.bowlM ? first.dataset.bowlM : first.dataset.bowl); bowl.set({ sx, sy, scale, drop: 0 }); follow(); }
 
   // ---------- one orchestrated load moment ----------
   if (!reduce) {
@@ -119,6 +136,7 @@ function ticket() {
     if (price !== 'counter') sum += +price; n++;
     total.textContent = '$' + sum.toFixed(2);
     count.forEach(c => c.textContent = n);
+    toast(`Added ${name}. ${n} ${n === 1 ? 'item' : 'items'} on your ticket.`);
     b.classList.remove('pressed'); void b.offsetWidth; b.classList.add('pressed');
   }));
 }

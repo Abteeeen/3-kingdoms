@@ -182,7 +182,8 @@ export function initBowl(canvas, opt) {
 
   function frame(dt) {
     const f = reduce ? 1 : 1 - Math.pow(0.0012, dt);   // frame-rate independent damping
-    for (const key in tgt) cur[key] = k(cur[key], tgt[key], f);
+    const fp = Math.min(1, f * 1.8);   // position follows faster than look changes, so an anchored bowl keeps up with scrolling
+    for (const key in tgt) cur[key] = k(cur[key], tgt[key], key === 'sx' || key === 'sy' ? fp : f);
     ptr.cx = k(ptr.cx, ptr.x, f * 0.6); ptr.cy = k(ptr.cy, ptr.y, f * 0.6);
     if (!reduce) t += dt;
     brothU.uTime.value = t; brothU.uSpice.value = cur.spice;
