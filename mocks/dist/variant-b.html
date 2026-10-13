@@ -1,0 +1,891 @@
+<title>3 Kingdoms Reference Look</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500&display=swap&text=%E4%B8%80%E4%B8%89%E4%B8%AD%E5%86%92%E5%90%83%E5%9B%BD%E5%9C%A8%E5%A5%BD%E5%AE%B6%E5%B8%83%E5%BD%93%E6%8B%9B%E6%8E%A8%E6%96%87%E6%96%AF%E6%98%AF%E6%9C%80%E7%89%8C%E7%89%9B%E7%8F%AD%E7%9A%84%E7%9B%B8%E8%80%81%E8%82%89%E8%8D%90%E8%8F%9C%E8%BF%99%E9%87%8C%E9%A4%90%E9%A6%86">
+<style>
+/* Shared layout for both mocks. Each variant's skin sets the tokens and the look. */
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--bg); color-scheme: light; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 1rem/1.5 var(--f-body); -webkit-font-smoothing: antialiased; }
+img, svg, video { max-width: 100%; display: block; }
+a { color: inherit; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+h1, h2, h3, p, ol, ul, figure, blockquote { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 60; background: var(--fg); color: var(--bg); padding: 8px 12px; }
+.skip:focus { top: 12px; }
+
+#bowl { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; }
+.top, main > section, .foot { position: relative; z-index: 2; }
+.mockflag { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 8px); right: 8px; z-index: 55; font: 500 11px/1 var(--f-mono); padding: 6px 8px; background: var(--fg); color: var(--bg); letter-spacing: .04em; pointer-events: none; }
+
+:root { --gut: clamp(16px, 2.2vw, 32px); }
+.top, main > section, .foot { padding-inline: var(--gut); }
+
+/* wordmark: each line fills the measure */
+.fit { display: block; white-space: nowrap; line-height: .8; max-width: 100%; overflow: hidden; }
+.fit > span { display: inline-block; }
+.wm { padding-top: clamp(14px, 2vw, 24px); }
+.navrow { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: start; padding-block: 12px 0; font-size: .82rem; line-height: 1.35; }
+.nav-links { display: flex; gap: 18px; }
+.nav-links a, .linkish { text-decoration: none; background: none; border: 0; padding: 0; }
+.nav-links a:hover, .linkish:hover { text-decoration: underline; text-underline-offset: 3px; }
+.nav-phone { justify-self: end; text-decoration: none; }
+
+/* hero */
+.hero { min-height: 82svh; display: grid; grid-template-rows: 1fr auto; padding-block: clamp(32px, 7vh, 80px) 28px; }
+.hero-copy { max-width: min(46rem, 52vw); align-self: center; display: grid; gap: 24px; }
+.stage, .step-caption, .swipe { display: none; }
+.dockets { display: contents; }
+.statement .ln { display: block; overflow: hidden; padding-bottom: .06em; }
+.statement [data-load] { display: inline-block; }
+.hero-meta { display: flex; justify-content: space-between; align-items: end; gap: 16px; font: 400 .75rem/1.4 var(--f-mono); letter-spacing: .04em; }
+.label { text-transform: uppercase; }
+.status { display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--open); display: inline-block; }
+[data-open="false"] .dot { background: var(--closed); }
+.proof { font: 400 .78rem/1.4 var(--f-mono); letter-spacing: .03em; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 20px; text-decoration: none; border: 0; transition: transform .45s cubic-bezier(.32,.72,0,1), background-color .3s, color .3s; }
+.btn:active { transform: scale(.97); }
+.wide { width: 100%; }
+.pressed { animation: press .24s steps(2, end); }
+@keyframes press { 50% { transform: translateY(2px) scale(.98); } }
+
+/* manifesto */
+.manifesto { background: var(--bg-solid); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 80px); padding-block: clamp(64px, 12vh, 140px); }
+.mf-left, .mf-right { display: grid; gap: 22px; align-content: start; min-width: 0; }
+.mf-right { padding-top: clamp(0px, 14vh, 160px); }
+.small { font-size: .9rem; max-width: 40ch; }
+
+/* footage slots: placeholders until the Drive clips arrive */
+.clip { aspect-ratio: 16 / 10; max-width: 100%; position: relative; overflow: hidden; }
+.clip-ph { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 4px; background: var(--clip-bg); color: var(--clip-fg); }
+.clip-ph::before { content: ""; position: absolute; inset: -50%; background: repeating-linear-gradient(115deg, transparent 0 22px, var(--clip-stripe) 22px 24px); animation: drift 14s linear infinite; }
+.clip-ph span, .clip-ph small { position: relative; }
+.clip-ph span { font-weight: 600; }
+.clip-ph small { font: 400 .72rem/1.3 var(--f-mono); letter-spacing: .04em; text-transform: uppercase; }
+@keyframes drift { to { transform: translateX(48px); } }
+
+/* process: pinned; columns rise with --p */
+.process { height: 100svh; min-height: 560px; overflow: hidden; --p: 0; }
+.pr-top { position: absolute; inset: clamp(20px, 5vh, 48px) var(--gut) auto; display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: start; }
+.ab { display: flex; gap: clamp(20px, 6vw, 90px); font: 400 .8rem/1 var(--f-mono); text-transform: uppercase; letter-spacing: .05em; }
+.pr-line { font-size: .95rem; max-width: 26ch; }
+.roller { position: absolute; left: var(--gut); right: var(--gut); width: calc(100% - 2 * var(--gut)); bottom: 52%; height: auto; overflow: visible; z-index: 3; }
+.roller line { stroke: var(--rule); stroke-width: 1.5; stroke-dasharray: 6 6; }
+.roller polygon { fill: none; stroke: var(--roll); stroke-width: 2; }
+.roller circle { fill: var(--roll); }
+.cols { position: absolute; left: var(--gut); right: var(--gut); bottom: 0; height: 62%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; align-items: end; z-index: 2; }
+.col { --rise: clamp(0, calc(var(--p) * 1.7 - var(--i) * .22), 1); height: calc(26% + 74% * var(--rise)); background: var(--col-bg); color: var(--col-fg); padding: 14px clamp(12px, 1.4vw, 22px); display: grid; align-content: space-between; gap: 10px; overflow: hidden; transition: background-color .4s; min-width: 0; }
+.col .num { font: 400 .75rem/1 var(--f-mono); }
+.col h3 { font-size: clamp(1.2rem, 2vw, 1.8rem); line-height: 1; }
+.col p { font-size: .84rem; max-width: 30ch; }
+.weigh { font: 500 clamp(1.6rem, 3.2vw, 2.8rem)/1 var(--f-mono); font-variant-numeric: tabular-nums; }
+.process.static .col { height: 100%; }
+
+/* menu */
+.menu { background: var(--bg-solid); padding-block: clamp(64px, 12vh, 140px); display: grid; gap: 40px; }
+.menu-head { display: grid; grid-template-columns: 1fr minmax(0, 22rem); gap: 24px; align-items: end; }
+.dishes li { display: grid; grid-template-columns: 3.2rem minmax(0, 1fr) minmax(0, 14rem) 6rem auto; gap: 16px; align-items: center; padding-block: 16px; border-top: 1px solid var(--rule); }
+.dishes li:last-child { border-bottom: 1px solid var(--rule); }
+.dishes .n { font: 400 .8rem/1 var(--f-mono); }
+.dishes .d { font-size: clamp(1.05rem, 1.8vw, 1.5rem); line-height: 1.15; }
+.dishes .tags { font: 400 .72rem/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: .04em; }
+.dishes .p { font-variant-numeric: tabular-nums; text-align: right; font-size: 1.05rem; }
+.add { min-height: 40px; min-width: 64px; padding: 6px 14px; background: none; }
+
+/* tickets */
+.steam { padding-block: clamp(80px, 16vh, 180px); background: var(--steam-bg); display: grid; gap: clamp(40px, 8vh, 90px); }
+.steam-line { text-align: center; margin-inline: auto; max-width: 14ch; }
+.ticket-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; align-items: start; }
+.docket, .myticket { display: grid; background: var(--paper); color: var(--paper-fg); min-width: 0; }
+.d-top { padding: 22px; display: grid; gap: 12px; }
+.d-top ul { display: grid; gap: 4px; font-size: .86rem; }
+.d-top ul li::before { content: "● "; font-size: .6em; vertical-align: middle; }
+.d-bot { padding: 18px 22px 22px; display: grid; gap: 14px; border-top: 2px dashed var(--perf); }
+.d-price { display: flex; justify-content: space-between; align-items: baseline; font: 400 .75rem/1 var(--f-mono); text-transform: uppercase; letter-spacing: .04em; }
+.d-price b { font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+.barcode { height: 46px; background: repeating-linear-gradient(90deg, var(--paper-fg) 0 2px, transparent 2px 4px, var(--paper-fg) 4px 5px, transparent 5px 9px, var(--paper-fg) 9px 12px, transparent 12px 13px); }
+.d-code { font: 400 .7rem/1 var(--f-mono); letter-spacing: .06em; }
+.myticket { padding: 22px; gap: 14px; }
+#ticket-lines { display: grid; gap: 8px; font-size: .9rem; min-height: 60px; }
+.tline { display: flex; justify-content: space-between; gap: 12px; animation: printline .22s steps(2, end); }
+@keyframes printline { from { opacity: 0; transform: translateY(-6px); } }
+.empty { opacity: .65; }
+.mt-total { display: flex; justify-content: space-between; border-top: 1px solid var(--perf); padding-top: 10px; font-variant-numeric: tabular-nums; }
+.mt-note { font-size: .8rem; }
+.tear { font: 400 .68rem/1 var(--f-mono); text-transform: uppercase; letter-spacing: .12em; border-top: 2px dashed var(--perf); padding-top: 10px; text-align: center; }
+
+/* reviews */
+.reviews { background: var(--bg-solid); padding-block: clamp(64px, 12vh, 140px); display: grid; gap: 40px; }
+.quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px 40px; }
+.quotes figure { display: grid; gap: 14px; align-content: start; }
+.quotes figcaption { font: 400 .72rem/1.4 var(--f-mono); letter-spacing: .03em; }
+
+/* find */
+.find { background: var(--bg-solid); padding-block: clamp(64px, 12vh, 140px); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 80px); }
+.find-left, .find-right { display: grid; gap: 24px; align-content: start; min-width: 0; }
+.route { display: grid; gap: 10px; counter-reset: r; }
+.route li { counter-increment: r; display: grid; grid-template-columns: 2rem 1fr; }
+.route li::before { content: counter(r, decimal-leading-zero); font: 400 .78rem/1.6 var(--f-mono); }
+.route .need { grid-column: 2; }
+.need { display: block; font: 400 .72rem/1.4 var(--f-mono); opacity: .7; }
+.hours { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+.hours th, .hours td { text-align: left; padding: 10px 0; border-top: 1px solid var(--rule); font-weight: 400; }
+.hours td { text-align: right; }
+
+/* story */
+.story { background: var(--bg-solid); padding-block: clamp(64px, 14vh, 160px); }
+.story .big { max-width: 30ch; }
+
+/* contact: transparent so the bowl shows */
+.contact { min-height: 92svh; display: grid; align-items: center; padding-block: 80px; }
+.ct-copy { justify-self: end; width: min(34rem, 100%); display: grid; gap: 22px; }
+.spice { display: grid; gap: 10px; }
+.spice-track { --v: .4; position: relative; height: 64px; display: flex; justify-content: space-between; align-items: center; touch-action: none; }
+.spice-track::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 2px dashed var(--rule); }
+.stop { width: 10px; height: 10px; border-radius: 50%; background: var(--fg); position: relative; }
+.spice-knob { --x: .4; position: absolute; top: 50%; left: calc(var(--x) * 100%); width: 66px; height: 66px; margin: -33px 0 0 -33px; border: 0; padding: 0; display: grid; place-items: center; transition: left .35s cubic-bezier(.32,.72,0,1); touch-action: none; }
+.spice-knob.grab { transition: none; cursor: grabbing; }
+.spice-knob span { font: 500 .6rem/1 var(--f-mono); text-transform: uppercase; letter-spacing: .05em; }
+.spice-ends { display: flex; justify-content: space-between; font: 400 .72rem/1 var(--f-mono); text-transform: uppercase; letter-spacing: .04em; }
+.bracket { font: 400 .72rem/1 var(--f-mono); text-transform: uppercase; letter-spacing: .1em; }
+
+/* faq */
+.faq { background: var(--bg-solid); padding-block: clamp(64px, 12vh, 140px); display: grid; gap: 32px; }
+.qs { display: grid; }
+.qs details { border-top: 1px solid var(--rule); }
+.qs details:last-child { border-bottom: 1px solid var(--rule); }
+.qs summary { cursor: pointer; padding: 18px 0; font-size: 1.1rem; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.qs summary::after { content: "+"; font-family: var(--f-mono); }
+.qs details[open] summary::after { content: "−"; }
+.qs p { padding-bottom: 18px; max-width: 60ch; }
+
+/* footer */
+.foot { background: var(--bg-solid); padding-block: 40px 56px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.foot-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; font-size: .84rem; }
+.foot-row a { text-decoration: none; }
+
+/* phone bar */
+.phonebar { display: none; }
+#toast { position: fixed; left: 50%; bottom: 90px; transform: translate(-50%, 20px); opacity: 0; z-index: 70; background: var(--fg); color: var(--bg); padding: 10px 14px; font-size: .85rem; transition: all .4s cubic-bezier(.32,.72,0,1); max-width: calc(100vw - 32px); }
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (max-width: 760px) {
+  body { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
+  .mockflag { position: absolute; top: 0; right: 0; bottom: auto; }
+  .wm { padding-top: 26px; }
+  .stage { display: block; height: 34svh; min-height: 240px; }
+  .navrow { grid-template-columns: 1fr auto; }
+  .nav-links { display: none; }
+  .hero { min-height: auto; grid-template-rows: auto auto; gap: 28px; padding-block: 20px 28px; }
+  .hero-copy { gap: 18px; }
+  .hero-copy { max-width: 100%; align-self: start; padding-top: 8px; }
+  .manifesto, .find { grid-template-columns: 1fr; }
+  .mf-right { padding-top: 0; }
+  .pr-top { grid-template-columns: 1fr; gap: 10px; }
+  .pr-top .pill { display: none; }
+  .step-caption { display: block; font-size: .9rem; line-height: 1.35; min-height: 3.6em; max-width: 34ch; }
+  .cols { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; height: 40%; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+  .col { height: calc(34% + 66% * var(--rise)); padding: 8px 6px; }
+  .col p:not(.weigh) { display: none; }
+  .col h3 { font-size: 1.05rem; }
+  .weigh { font-size: 1.05rem; }
+  .roller { bottom: calc(40% + 80px); }
+  .menu-head { grid-template-columns: 1fr; }
+  .dishes li { grid-template-columns: 2.2rem minmax(0, 1fr) auto; grid-template-areas: "n d p" "n t add"; row-gap: 6px; }
+  .dishes .n { grid-area: n; align-self: start; padding-top: 4px; } .dishes .d { grid-area: d; } .dishes .tags { grid-area: t; } .dishes .p { grid-area: p; } .dishes .add { grid-area: add; justify-self: end; }
+  .contact { min-height: auto; align-items: start; padding-block: 64px; }
+  .swipe { display: block; font: 400 .75rem/1 var(--f-mono); text-transform: uppercase; letter-spacing: .05em; margin-bottom: -24px; }
+  .ticket-grid { grid-template-columns: minmax(0, 1fr); }
+  .dockets { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(-1 * var(--gut)); padding: 12px var(--gut) 22px; scrollbar-width: none; }
+  .dockets::-webkit-scrollbar { display: none; }
+  .docket { flex: 0 0 84%; scroll-snap-align: center; transform: none !important; }
+  .mockflag { font-size: 9px; padding: 4px 6px; }
+  .ct-copy { justify-self: stretch; }
+  .phonebar { display: grid; grid-template-columns: 1.6fr 1fr auto; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; padding: 8px 8px calc(8px + env(safe-area-inset-bottom, 0px)); gap: 8px; background: var(--bar-bg); }
+  .phonebar a, .phonebar button { min-height: 48px; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; padding: 0 14px; }
+  .count { font-variant-numeric: tabular-nums; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clip-ph::before, .tline, .pressed { animation: none; }
+  .btn, .spice-knob, #toast { transition: none; }
+}
+
+/* Variant B: the reference's language. White page, one chilli red for everything, plain sans with italic serif accents, mono labels. */
+:root {
+  --bg: #FFFFFF; --bg-solid: #FFFFFF; --fg: #CF1B2B; --focus: #1E1A19;
+  --red: #CF1B2B; --on-red: #FFFFFF; --rule: rgba(207, 27, 43, .32);
+  --open: #2E8B3A; --closed: #CF1B2B;
+  --col-bg: #CF1B2B; --col-fg: #FFFFFF; --roll: #FFFFFF;
+  --paper: #FFFFFF; --paper-fg: #CF1B2B; --perf: rgba(207, 27, 43, .45);
+  --clip-bg: #FBE3E0; --clip-fg: #CF1B2B; --clip-stripe: rgba(207, 27, 43, .12);
+  --steam-bg: radial-gradient(60% 50% at 22% 30%, #FFD8C6 0%, transparent 70%), radial-gradient(55% 55% at 78% 62%, #FFC9BD 0%, transparent 70%), radial-gradient(70% 60% at 50% 100%, #FFE9DE 0%, transparent 75%), #FFF6F1;
+  --bar-bg: #FFFFFF;
+  --f-body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --f-em: "Instrument Serif", "Noto Serif SC", Georgia, serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+em { font-family: var(--f-em); font-style: italic; font-weight: 400; letter-spacing: -.005em; }
+[lang="zh-Hans"] { font-family: "Noto Serif SC", var(--f-em); font-style: normal; }
+
+.wm { color: var(--red); }
+.wm-zhi { display: none; }
+.wm-en { font: 600 120px/.78 var(--f-body); letter-spacing: -.055em; }
+.navrow { color: var(--red); }
+
+.statement, .big { font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 3.3rem); line-height: 1.04; letter-spacing: -.02em; }
+.statement em, .big em { font-size: 1.08em; }
+.huge { font-weight: 400; font-size: clamp(3rem, 8vw, 7.5rem); line-height: .92; letter-spacing: -.035em; }
+.huge em { display: block; padding-left: .08em; }
+
+.btn-primary { background: var(--red); color: var(--on-red); border-radius: 999px; font-weight: 500; }
+.btn-primary:hover { background: #A8121F; }
+.btn-oval, .pill { border: 1px solid var(--red); border-radius: 50%; padding: 10px 26px; font: italic 400 1.15rem/1 var(--f-em); color: var(--red); background: transparent; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
+.btn-oval:hover { background: var(--red); color: var(--on-red); }
+
+.manifesto .big { font-size: clamp(1.7rem, 3vw, 2.8rem); }
+.clip { border-radius: 2px; }
+
+.col h3 { font-weight: 400; }
+.col.on { background: #A8121F; }
+.process .pr-line { font-size: 1rem; }
+
+.add { border: 1px solid var(--red); border-radius: 999px; color: var(--red); }
+.add:hover { background: var(--red); color: #fff; }
+
+.steam-line { color: var(--red); font-weight: 400; font-size: clamp(2.2rem, 5.4vw, 4.6rem); line-height: 1; letter-spacing: -.03em; }
+.docket, .myticket { border-radius: 18px; box-shadow: 0 1px 0 rgba(207,27,43,.08), 0 24px 40px -28px rgba(120, 20, 20, .45); }
+.docket:nth-child(1) { transform: rotate(-1.5deg); } .docket:nth-child(3) { transform: rotate(1.2deg); }
+.d-top h3 { font-size: 2rem; font-weight: 400; }
+.d-top p { font-size: .92rem; }
+.d-bot { position: relative; }
+.d-bot::before, .d-bot::after { content: ""; position: absolute; top: -11px; width: 20px; height: 20px; border-radius: 50%; background: #FFEDE5; }
+.d-bot::before { left: -10px; } .d-bot::after { right: -10px; }
+.btn.wide { border-radius: 8px; }
+.myticket h3 { font: italic 400 2rem/1 var(--f-em); }
+
+.quotes blockquote { font: italic 400 clamp(1.4rem, 2.4vw, 2.1rem)/1.12 var(--f-em); }
+.quotes blockquote[lang="zh-Hans"] { font-style: normal; font-size: clamp(1.2rem, 2vw, 1.7rem); }
+
+.spice-knob { background: var(--red); color: #fff; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.spice-knob:focus-visible { outline: none; filter: drop-shadow(0 0 0 #1E1A19) drop-shadow(0 0 3px #1E1A19); }
+.ct-copy .big { font-size: clamp(2rem, 4vw, 3.4rem); }
+
+.qs summary { font-weight: 400; }
+.foot-wm { color: var(--red); font: 600 100px/.8 var(--f-body); letter-spacing: -.05em; }
+.foot-wm [lang], .foot-wm span { font-family: inherit; }
+.phonebar { border-top: 1px solid var(--rule); }
+.phonebar .pb-main { background: var(--red); color: #fff; border-radius: 999px; }
+.phonebar a:not(.pb-main), .phonebar button { color: var(--red); }
+
+</style>
+<a class="skip" href="#main">Skip to content</a>
+<canvas id="bowl" aria-hidden="true"></canvas>
+<p class="mockflag">Mock for review · Variant B · Reference look</p>
+
+<header class="top" id="top">
+  <h1 class="wm" aria-label="3 Kingdoms, 三国冒菜">
+    <span class="wm-en fit"><span><span class="wm-zhi" lang="zh-Hans">三国冒菜</span>3 KINGDOMS</span></span>
+  </h1>
+  <nav class="navrow" aria-label="Main">
+    <span class="nav-desc">Sichuan mao cai <span lang="zh-Hans">三国冒菜</span><br>Level A, Uptown, Brisbane</span>
+    <span class="nav-links"><a href="#menu">Menu</a><a href="#find">Find us</a><a href="#tickets">Order</a><button type="button" class="linkish" data-zh="The Chinese version is part of the build. This mock is in English.">中文</button></span>
+    <a class="nav-phone" href="tel:+61731900144">07 3190 0144</a>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero" id="hero" data-bowl="0.5,-0.18,1" data-bowl-m="0,0,0.74" data-anchor-m=".stage" data-drop="0" data-steam="1">
+    <div class="hero-copy">
+      <h2 class="statement"><span class="ln"><span data-load>Sichuan mini hotpot,</span></span><span class="ln"><span data-load>weighed to order,</span></span><span class="ln"><span data-load><em>six levels of heat.</em></span></span></h2>
+      <div class="stage" aria-hidden="true"></div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#tickets">Build your order</a>
+        <a class="btn btn-oval" href="#find">Find us</a>
+      </div>
+      <p class="proof">4.6 stars from 800+ ratings on Uber Eats</p>
+    </div>
+    <div class="hero-meta">
+      <p><span class="label">Brisbane time</span><br><span data-clock>12:00:00</span></p>
+      <p class="status" data-open="true"><span class="dot" aria-hidden="true"></span><span data-status>Open now</span></p>
+    </div>
+  </section>
+
+  <section class="manifesto" id="price" data-bowl="0,0,0">
+    <div class="mf-left">
+      <h2 class="big">The same bowl costs $25.80 on the apps. <em>At our counter, it’s $20.80.</em></h2>
+      <p class="small">Every bowl starts at the fridge: beef, lamb, fish, chicken, meatballs and greens, with handmade noodles. We cook it in broth made fresh every day and spice it to your level.</p>
+    </div>
+    <div class="mf-right">
+      <figure class="clip" data-clip="1"><div class="clip-ph"><span>Your footage goes here</span><small>Clip slot 1 · the counter</small></div></figure>
+      <h2 class="big">Shop 32, Level A. <em>Right next to Target.</em></h2>
+      <a class="btn btn-oval" href="#find">How to get here</a>
+    </div>
+  </section>
+
+  <section class="process" id="process" data-bowl="0,0.3,0.72" data-bowl-m="0,0.3,0.62">
+    <div class="pr-top">
+      <p class="ab"><span>Fridge</span><span aria-hidden="true">→</span><span>Bowl</span></p>
+      <p class="pr-line">Four steps from the fridge <em>to your bowl.</em></p>
+      <p class="step-caption" id="step-caption" aria-live="polite"></p>
+      <span class="pill">How it works</span>
+    </div>
+    <svg id="roller" class="roller" viewBox="0 0 1000 120" aria-hidden="true"><line x1="0" y1="60" x2="1000" y2="60"/><polygon points=""/><circle cx="0" cy="60" r="4"/></svg>
+    <ol class="cols">
+      <li class="step col" style="--i:0"><span class="num">01</span><h3>Pick <em>it</em></h3><p>Choose a set bowl, or fill your own from the fridge.</p></li>
+      <li class="step col" style="--i:1"><span class="num">02</span><h3>Weigh <em>it</em></h3><p class="weigh"><span id="weight">000g</span></p><p>Build-your-own bowls are priced by weight: 500g or 1000g.</p></li>
+      <li class="step col" style="--i:2"><span class="num">03</span><h3>Spice <em>it</em></h3><p>Six heat levels, from not spicy to extra hot. Reviewers find medium spicy.</p></li>
+      <li class="step col" style="--i:3"><span class="num">04</span><h3>Collect <em>it</em></h3><p>Pick up your bowl at the counter when it’s ready. Water and utensils are self-serve.</p></li>
+    </ol>
+  </section>
+
+  <section class="menu" id="menu" data-bowl="0,0,0">
+    <div class="menu-head">
+      <h2 class="huge">On the <em>counter</em></h2>
+      <p class="small">Counter prices, checked 13 Oct 2026. Most dishes may contain nuts, so ask at the counter if you have an allergy.</p>
+    </div>
+    <ul class="dishes">
+      <li><span class="n">01.</span><span class="d">Signature Mini Hotpot with rice <span lang="zh-Hans">招牌冒菜</span></span><span class="tags">Set bowl · may contain nuts</span><span class="p">$20.80</span><button type="button" class="add" data-add="Signature Mini Hotpot|20.80" aria-label="Add Signature Mini Hotpot to my ticket">Add</button></li>
+      <li><span class="n">02.</span><span class="d">Beef Mini Hotpot with rice <span lang="zh-Hans">牛肉冒菜</span></span><span class="tags">Set bowl · may contain nuts</span><span class="p">$19.80</span><button type="button" class="add" data-add="Beef Mini Hotpot|19.80" aria-label="Add Beef Mini Hotpot to my ticket">Add</button></li>
+      <li><span class="n">03.</span><span class="d">Marinated Beef Noodles</span><span class="tags">Noodle soup · choose your heat</span><span class="p">$19.80</span><button type="button" class="add" data-add="Marinated Beef Noodles|19.80" aria-label="Add Marinated Beef Noodles to my ticket">Add</button></li>
+      <li><span class="n">04.</span><span class="d">Braised Beef Noodles</span><span class="tags">Noodle soup</span><span class="p">$19.80</span><button type="button" class="add" data-add="Braised Beef Noodles|19.80" aria-label="Add Braised Beef Noodles to my ticket">Add</button></li>
+      <li><span class="n">05.</span><span class="d">Marinated Beef</span><span class="tags">Sichuan side</span><span class="p">$8.90</span><button type="button" class="add" data-add="Marinated Beef|8.90" aria-label="Add Marinated Beef to my ticket">Add</button></li>
+      <li><span class="n">06.</span><span class="d">Sichuanese Tofu</span><span class="tags">Sichuan side</span><span class="p">$6.90</span><button type="button" class="add" data-add="Sichuanese Tofu|6.90" aria-label="Add Sichuanese Tofu to my ticket">Add</button></li>
+    </ul>
+  </section>
+
+  <section class="steam" id="tickets" data-bowl="0,0,0">
+    <h2 class="steam-line">Broth made fresh, <em>every single day.</em></h2>
+    <p class="swipe">Swipe for more bowls</p>
+    <div class="ticket-grid">
+      <div class="dockets">
+      <article class="docket">
+        <div class="d-top"><h3><em>Signature</em></h3><p>Our signature broth with vegetables, your choice of three proteins, and steamed rice.</p><ul><li>Set bowl</li><li>Six heat levels</li><li>May contain nuts</li></ul></div>
+        <div class="d-bot"><p class="d-price"><span>Counter price</span><b>$20.80</b></p><button type="button" class="btn btn-primary wide" data-add="Signature Mini Hotpot|20.80">Add to my ticket</button><div class="barcode" aria-hidden="true"></div><p class="d-code">3K/BOWL.01 · SIG</p></div>
+      </article>
+      <article class="docket">
+        <div class="d-top"><h3><em>Beef</em></h3><p>Signature broth with vegetables like wombok and broccoli, beef, and steamed rice.</p><ul><li>Set bowl</li><li>Six heat levels</li><li>May contain nuts</li></ul></div>
+        <div class="d-bot"><p class="d-price"><span>Counter price</span><b>$19.80</b></p><button type="button" class="btn btn-primary wide" data-add="Beef Mini Hotpot|19.80">Add to my ticket</button><div class="barcode" aria-hidden="true"></div><p class="d-code">3K/BOWL.02 · BEF</p></div>
+      </article>
+      <article class="docket">
+        <div class="d-top"><h3><em>Your own</em></h3><p>Fill a bowl from the fridge. We weigh it, cook it in the broth and spice it your way.</p><ul><li>500g or 1000g</li><li>Priced by weight</li><li>Rice not included</li></ul></div>
+        <div class="d-bot"><p class="d-price"><span>Counter price</span><b>By weight</b></p><button type="button" class="btn btn-primary wide" data-add="Build-your-own bowl|counter">Add to my ticket</button><div class="barcode" aria-hidden="true"></div><p class="d-code">3K/BOWL.03 · DIY</p></div>
+      </article>
+      </div>
+      <aside class="myticket" id="myticket" aria-labelledby="mt-h">
+        <h3 id="mt-h">My ticket</h3>
+        <ul id="ticket-lines"><li class="empty">Add a bowl to start.</li></ul>
+        <p class="mt-total"><span>Total so far</span><b id="ticket-total">$0.00</b></p>
+        <p class="mt-note">Show this ticket at the counter. Online pickup ordering comes with the full build.</p>
+        <p class="tear" aria-hidden="true">Show at the counter</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="reviews" id="reviews" data-bowl="0,0,0">
+    <h2 class="huge">What people <em>say</em></h2>
+    <div class="quotes">
+      <figure><blockquote>“best Mala base in brisbane”</blockquote><figcaption>Whare C. · Uber Eats · July 2023</figcaption></figure>
+      <figure><blockquote>“The Marinated Beef Noodles were INCREDIBLE! the broth was so flavourful. … The numbing was so good.”</blockquote><figcaption>Russell H. · DoorDash · September 2026</figcaption></figure>
+      <figure><blockquote>“Unbelievably great hot pots. Place was a bit tricky to find …”</blockquote><figcaption>Ashley H. · EatClub · December 2025</figcaption></figure>
+      <figure><blockquote lang="zh-Hans">“相当好吃！这是在布里斯班最推荐的一家老牌的中国餐馆！”</blockquote><figcaption>Ctrip review · January 2026 · “Really tasty! The long-established Chinese restaurant I’d most recommend in Brisbane!”</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="find" id="find" data-bowl="0,0,0">
+    <div class="find-left">
+      <p class="ab"><span>Queen St</span><span aria-hidden="true">→</span><span>Shop 32</span></p>
+      <h2 class="big">Find Level A, <em>then look for Target.</em></h2>
+      <ol class="route">
+        <li>Head into Uptown, 91 Queen St. <span class="need">[Route from the mall entrance to be checked on foot]</span></li>
+        <li>Get to Level A. It’s also the level of the Queen Street bus station.</li>
+        <li>Walk towards Target. Shop 32 is beside it.</li>
+      </ol>
+      <div class="cta-row"><a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=3+Kingdoms+Uptown+91+Queen+St+Brisbane" target="_blank" rel="noopener">Open in Maps</a><a class="btn btn-oval" href="tel:+61731900144">07 3190 0144</a></div>
+    </div>
+    <div class="find-right">
+      <figure class="clip" data-clip="2"><div class="clip-ph"><span>Your footage goes here</span><small>Clip slot 2 · the walk in</small></div></figure>
+      <table class="hours" aria-label="Opening hours">
+        <tbody>
+          <tr><th scope="row">Monday to Thursday</th><td>11am to 7pm</td></tr>
+          <tr><th scope="row">Friday</th><td>11am to 7:30pm</td></tr>
+          <tr><th scope="row">Saturday and Sunday</th><td>11am to 7pm</td></tr>
+        </tbody>
+      </table>
+      <p class="small" data-open="true"><span class="dot" aria-hidden="true"></span> <span data-today>Open today</span>. Uptown Gift Cards accepted.</p>
+    </div>
+  </section>
+
+  <section class="story" id="story" data-bowl="0,0,0">
+    <p class="big"><span lang="zh-Hans">三国</span> means Three Kingdoms. Mao cai comes from Chengdu, capital of Shu, one of the three. <em>The rest of the story is in the bowl.</em></p>
+  </section>
+
+  <section class="contact" id="contact" data-bowl="-0.42,-0.02,0.95" data-bowl-m="0,0,0.68" data-anchor-m=".stage" data-drop="1">
+    <div class="ct-copy">
+      <span class="pill">Ready?</span>
+      <h2 class="big">Ready for lunch? <em>Pick your heat.</em></h2>
+      <p class="small">Drag the chilli to set your spice level and watch the broth change. The real level names come from the counter.</p>
+      <div class="stage" aria-hidden="true"></div>
+      <div class="spice">
+        <div id="spice-track" class="spice-track"><span class="stop"></span><span class="stop"></span><span class="stop"></span><span class="stop"></span><span class="stop"></span><span class="stop"></span>
+          <button type="button" id="spice-knob" class="spice-knob" role="slider" aria-label="Spice level" aria-valuemin="1" aria-valuemax="6" aria-valuenow="3"><span>Drag me</span></button>
+        </div>
+        <p class="spice-ends"><span>Not spicy</span><b id="spice-label">Level 3 of 6</b><span>Extra hot</span></p>
+      </div>
+      <div class="cta-row"><a class="btn btn-primary" href="#tickets">Build your order</a></div>
+      <p class="bracket">[ Show your ticket at the counter ]</p>
+    </div>
+  </section>
+
+  <section class="faq" id="faq" data-bowl="0,0,0">
+    <h2 class="huge">Questions</h2>
+    <div class="qs">
+      <details><summary>Where exactly is 3 Kingdoms?</summary><p>Shop 32, Level A, Uptown, 91 Queen St, Brisbane City, next to Target.</p></details>
+      <details><summary>Is it cheaper than Uber Eats?</summary><p>Yes. The Signature bowl is $20.80 at the counter and $25.80 on Uber Eats.</p></details>
+      <details><summary>Can I order ahead for pickup?</summary><p>Not online yet. Build your ticket here and show it at the counter.</p></details>
+      <details><summary>How spicy is medium?</summary><p>Reviewers say medium is “definitely on the spicy side”. Start lower if you’re unsure.</p></details>
+      <details><summary>I have a nut allergy. Can I eat here?</summary><p>Most dishes may contain nuts. Ask at the counter before you order.</p></details>
+      <details><summary>Do you deliver?</summary><p>Yes, through Uber Eats, DoorDash and HungryPanda, at app prices.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p class="foot-wm fit"><span>3 KINGDOMS 三国冒菜</span></p>
+  <div class="foot-row">
+    <p>Shop 32, Level A, Uptown<br>91 Queen St, Brisbane City QLD 4000</p>
+    <p>Mon to Thu, Sat, Sun 11am to 7pm<br>Fri 11am to 7:30pm</p>
+    <p><a href="tel:+61731900144">07 3190 0144</a><br>Jade Garden Pty Ltd</p>
+    <p>Mock prepared 13 Oct 2026.<br>Placeholders are labelled.</p>
+  </div>
+</footer>
+
+<nav class="phonebar" aria-label="Quick actions">
+  <a href="#tickets" class="pb-main">Build your order <span class="count" data-ticket-count>0</span></a>
+  <a href="#find">Find us</a>
+  <button type="button" class="linkish" data-zh="The Chinese version is part of the build. This mock is in English.">中文</button>
+</nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="module">
+// 3 Kingdoms mock: real-time 3D mao cai bowl.
+// One engine, two looks: 'gloss' (physical, ACES, studio env) and 'ink' (toon shading with ink outlines).
+// The page drives it with bowl.set({ sx, sy, scale, drop, spice, steam }); every value is lerped (awwwards-3d: "lerp everything").
+import * as THREE from 'https://unpkg.com/three@0.170.0/build/three.module.js';
+
+function initBowl(canvas, opt) {
+  const ink = opt.style === 'ink';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = ink ? THREE.NoToneMapping : THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+  const camTarget = new THREE.Vector3(0, 0.75, 0);
+  camera.position.set(0, 4.4, 8.6);
+  camera.lookAt(camTarget);
+
+  // ---------- lighting ----------
+  if (!ink) {
+    // Small studio built in code (no addons import): warm key, cool fill, soft top box. metalness/clearcoat need an env map.
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    const env = new THREE.Scene();
+    env.add(new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({ color: 0x8a8580, side: THREE.BackSide })));
+    const panel = (c, i, w, h, p, l) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(c).multiplyScalar(i), side: THREE.DoubleSide })); m.position.copy(p); m.lookAt(l); env.add(m); };
+    panel(0xfff1e0, 9, 6, 4, new THREE.Vector3(-6, 6, 5), new THREE.Vector3(0, 0, 0));
+    panel(0xdfe8ff, 3, 5, 5, new THREE.Vector3(7, 3, -2), new THREE.Vector3(0, 0, 0));
+    panel(0xffffff, 6, 8, 8, new THREE.Vector3(0, 9.5, 0), new THREE.Vector3(0, 0, 0));
+    scene.environment = pmrem.fromScene(env, 0.035).texture;
+    const key = new THREE.DirectionalLight(0xfff0e0, 1.6); key.position.set(-4, 7, 5); scene.add(key);
+  } else {
+    scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+    const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-3, 6, 4); scene.add(key);
+  }
+
+  // Toon ramp: three flat ink tones, nearest filtered so bands stay crisp.
+  const ramp = new THREE.DataTexture(new Uint8Array([90, 90, 90, 255, 175, 175, 175, 255, 255, 255, 255, 255]), 3, 1, THREE.RGBAFormat);
+  ramp.minFilter = ramp.magFilter = THREE.NearestFilter; ramp.needsUpdate = true;
+
+  const mat = (color, o = {}) => ink
+    ? new THREE.MeshToonMaterial({ color, gradientMap: ramp })
+    : new THREE.MeshPhysicalMaterial({ color, roughness: o.r ?? 0.5, metalness: 0, clearcoat: o.cc ?? 0, clearcoatRoughness: 0.15, sheen: o.sheen ?? 0 });
+  const outlineMat = new THREE.MeshBasicMaterial({ color: opt.inkColor || 0x1c1a17, side: THREE.BackSide });
+  const addOutline = (mesh, s = 1.045) => { if (!ink) return; const o = new THREE.Mesh(mesh.geometry, outlineMat); o.scale.setScalar(s); mesh.add(o); };
+
+  const root = new THREE.Group(); scene.add(root);
+  const bowl = new THREE.Group(); root.add(bowl);
+
+  // ---------- bowl: lathe profile, outer wall then inner wall ----------
+  const prof = [[0, 0.1], [0.56, 0.1], [0.6, 0], [0.76, 0], [0.82, 0.12], [1.22, 0.46], [1.52, 0.96], [1.64, 1.3], [1.66, 1.37], [1.59, 1.39], [1.47, 1.29], [1.12, 0.82], [0.62, 0.44], [0, 0.38]]
+    .map(([x, y]) => new THREE.Vector2(x, y));
+  const bowlGeo = new THREE.LatheGeometry(prof, 96);
+  const glaze = ink ? new THREE.MeshToonMaterial({ color: opt.bowlColor, gradientMap: ramp, side: THREE.DoubleSide })
+    : new THREE.MeshPhysicalMaterial({ color: opt.bowlColor, roughness: 0.22, clearcoat: 1, clearcoatRoughness: 0.08, side: THREE.DoubleSide });
+  const bowlMesh = new THREE.Mesh(bowlGeo, glaze); bowl.add(bowlMesh);
+  if (ink) { const o = new THREE.Mesh(bowlGeo, outlineMat); o.scale.set(1.035, 1.03, 1.035); o.position.y = -0.015; bowl.add(o); }
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(1.625, 0.045, 12, 120), mat(opt.rimColor, { r: 0.3, cc: 1 }));
+  rim.rotation.x = Math.PI / 2; rim.position.y = 1.36; bowl.add(rim);
+
+  // ---------- broth: chilli-oil shader ----------
+  const brothU = { uTime: { value: 0 }, uSpice: { value: 0.35 }, uInk: { value: ink ? 1 : 0 }, uRes: { value: new THREE.Vector2(1, 1) } };
+  const broth = new THREE.Mesh(new THREE.CircleGeometry(1.4, 128), new THREE.ShaderMaterial({
+    uniforms: brothU,
+    vertexShader: `
+      uniform float uTime; varying vec2 vUv; varying vec3 vPos;
+      void main(){ vUv = uv; vec3 p = position;
+        float r = length(p.xy);
+        p.z += 0.018 * sin(r * 9.0 - uTime * 1.6) * (1.0 - r / 1.4);
+        vPos = p; gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0); }`,
+    fragmentShader: `
+      precision highp float;
+      uniform float uTime, uSpice, uInk; uniform vec2 uRes; varying vec2 vUv; varying vec3 vPos;
+      float h(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+      float n(vec2 p){ vec2 i = floor(p), f = fract(p); f = f*f*(3.0-2.0*f);
+        return mix(mix(h(i), h(i+vec2(1,0)), f.x), mix(h(i+vec2(0,1)), h(i+vec2(1,1)), f.x), f.y); }
+      float fbm(vec2 p){ float v = 0.0, a = 0.5; for (int i = 0; i < 5; i++){ v += a * n(p); p *= 2.03; a *= 0.5; } return v; }
+      void main(){
+        vec2 p = vPos.xy; float r = length(p) / 1.4; float t = uTime * 0.12;
+        float ang = atan(p.y, p.x) + t * 1.5 + r * 2.0;
+        vec2 q = vec2(cos(ang), sin(ang)) * r * 3.0;
+        float f = fbm(q + fbm(q * 1.7 + t) * 1.6);
+        vec3 deep = mix(vec3(0.62, 0.13, 0.07), vec3(0.42, 0.04, 0.02), uSpice);
+        vec3 mid  = mix(vec3(0.86, 0.32, 0.10), vec3(0.78, 0.10, 0.05), uSpice);
+        vec3 oil  = vec3(0.98, 0.62, 0.20);
+        vec3 col = mix(deep, mid, smoothstep(0.35, 0.75, f));
+        // oil droplets: cellular rings drifting on the surface
+        vec2 g = p * 6.0 + vec2(t * 2.0, -t);
+        vec2 id = floor(g); vec2 fr = fract(g) - 0.5; float rnd = h(id);
+        float d = length(fr + (vec2(h(id + 3.1), h(id + 7.7)) - 0.5) * 0.5);
+        float drop = smoothstep(0.17 * rnd + 0.04, 0.0, d) * step(0.55, rnd);
+        col = mix(col, oil, drop * 0.75 + smoothstep(0.62, 0.9, f) * 0.35);
+        col *= mix(1.0, 0.55, smoothstep(0.75, 1.0, r));           // shade towards the bowl wall
+        float spec = smoothstep(0.985, 1.0, sin(f * 9.0 + t * 4.0)) * (1.0 - r);
+        col += spec * 0.5;
+        if (uInk > 0.5) {                                          // print look: posterise and halftone
+          col = floor(col * 4.0 + 0.5) / 4.0;
+          vec2 sc = gl_FragCoord.xy / 5.0; vec2 c = fract(sc) - 0.5;
+          float lum = dot(col, vec3(0.3, 0.59, 0.11));
+          float dotR = (1.0 - lum) * 0.55;
+          col = mix(col, col * 0.55, step(length(c), dotR) * 0.6);
+        }
+        gl_FragColor = vec4(col, 1.0);
+        #include <colorspace_fragment>
+      }`
+  }));
+  broth.rotation.x = -Math.PI / 2; broth.position.y = 1.18; bowl.add(broth);
+
+  // ---------- ingredients ----------
+  const rand = (() => { let s = 7; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
+  const items = [];
+  const SURF = 1.2;
+  const addItem = (mesh, kind, outline = 1.06) => {
+    addOutline(mesh, outline);
+    const a = rand() * Math.PI * 2, rr = Math.sqrt(rand()) * 1.02;
+    const rest = new THREE.Vector3(Math.cos(a) * rr, SURF + 0.02 + rand() * 0.05, Math.sin(a) * rr);
+    const sa = rand() * Math.PI * 2, sr = 2.0 + rand() * 1.3;
+    const start = new THREE.Vector3(Math.cos(sa) * sr, 1.6 + rand() * 1.5, Math.sin(sa) * sr * 0.6);
+    const restRot = new THREE.Euler(mesh.rotation.x, rand() * Math.PI * 2, mesh.rotation.z);
+    const startRot = new THREE.Euler(rand() * 6, rand() * 6, rand() * 6);
+    mesh.position.copy(start); bowl.add(mesh);
+    items.push({ mesh, kind, rest, start, restRot, startRot, delay: rand() * 0.55, phase: rand() * 6.28 });
+  };
+  const C = opt.food;
+  for (let i = 0; i < 6; i++) { const m = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.04, 0.36, 6, 1, 4), mat(C.beef, { r: 0.65 })); bendGeo(m.geometry, 0.35); m.rotation.x = 0.08; addItem(m, 'beef', 1.12); }
+  for (let i = 0; i < 4; i++) { const m = new THREE.Mesh(new RoundedBox(0.3), mat(C.tofu, { r: 0.8, sheen: 0.4 })); addItem(m, 'tofu'); }
+  for (let i = 0; i < 4; i++) { const m = new THREE.Mesh(new THREE.SphereGeometry(0.3, 20, 12), mat(i % 2 ? C.greenLight : C.green, { r: 0.45 })); m.scale.set(1.25, 0.16, 0.62); addItem(m, 'greens', 1.08); }
+  for (let i = 0; i < 6; i++) {
+    const m = new THREE.Mesh(new THREE.CapsuleGeometry(0.07, 0.42, 6, 14), mat(C.chilli, { r: 0.18, cc: 1 }));
+    const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.035, 0.12, 8), mat(C.green, { r: 0.5 })); stem.position.y = 0.3; m.add(stem);
+    m.rotation.z = Math.PI / 2; addItem(m, 'chilli', 1.18);
+  }
+  for (let i = 0; i < 14; i++) { const m = new THREE.Mesh(new THREE.IcosahedronGeometry(0.05, 1), mat(C.pepper, { r: 0.9 })); addItem(m, 'pepper', 1.2); }
+  for (let i = 0; i < 5; i++) {
+    const pts = []; const a0 = rand() * 6.28, rr = 0.25 + rand() * 0.55;
+    for (let k = 0; k < 7; k++) { const a = a0 + k * 0.5; pts.push(new THREE.Vector3(Math.cos(a) * (rr + Math.sin(k) * 0.12), 0.02 * Math.sin(k * 2.0), Math.sin(a) * (rr + Math.cos(k) * 0.12))); }
+    const m = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 60, 0.035, 8), mat(C.noodle, { r: 0.4, cc: 0.4 }));
+    addItem(m, 'noodle', 1.25);
+  }
+  for (let i = 0; i < 6; i++) { const m = new THREE.Mesh(new THREE.CircleGeometry(0.09, 10), mat(C.herb, { r: 0.6 })); m.material.side = THREE.DoubleSide; m.rotation.x = -Math.PI / 2; addItem(m, 'herb', 1.0); }
+  items.filter(i => i.kind === 'noodle').forEach(i => { i.rest.set(0, SURF - 0.02, 0); i.restRot.set(0, i.restRot.y, 0); });
+
+  // ---------- steam ----------
+  const sc = document.createElement('canvas'); sc.width = sc.height = 64; const sx = sc.getContext('2d');
+  const gr = sx.createRadialGradient(32, 32, 0, 32, 32, 32); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+  sx.fillStyle = gr; sx.fillRect(0, 0, 64, 64);
+  const SN = window.innerWidth < 700 ? 34 : 60;
+  const sPos = new Float32Array(SN * 3), sSeed = new Float32Array(SN);
+  for (let i = 0; i < SN; i++) { sSeed[i] = Math.random(); }
+  const sGeo = new THREE.BufferGeometry(); sGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
+  const sMat = new THREE.PointsMaterial({ map: new THREE.CanvasTexture(sc), color: opt.steamColor, size: 0.9, transparent: true, opacity: 0.32, depthWrite: false, sizeAttenuation: true });
+  const steam = new THREE.Points(sGeo, sMat); bowl.add(steam);
+
+  // ---------- state ----------
+  const tgt = { sx: 0, sy: 0, scale: 1, drop: 0, spice: 0.35, steam: 1 };
+  const cur = { ...tgt, scale: reduce ? 1 : 0 };   // the bowl grows in on load
+  const ptr = { x: 0, y: 0, cx: 0, cy: 0 };
+  window.addEventListener('pointermove', e => { ptr.x = e.clientX / innerWidth * 2 - 1; ptr.y = e.clientY / innerHeight * 2 - 1; }, { passive: true });
+
+  function resize() {
+    const w = innerWidth, h = innerHeight;
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+  }
+  resize(); addEventListener('resize', resize);
+
+  const right = new THREE.Vector3(), up = new THREE.Vector3(), fwd = new THREE.Vector3();
+  function place() {
+    // screen-space target (-1..1) to world, on the plane through camTarget facing the camera
+    const d = camera.position.distanceTo(camTarget);
+    const hh = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * d, ww = hh * camera.aspect;
+    camera.getWorldDirection(fwd); right.crossVectors(fwd, camera.up).normalize(); up.crossVectors(right, fwd).normalize();
+    root.position.copy(camTarget).addScaledVector(right, cur.sx * ww).addScaledVector(up, cur.sy * hh).addScaledVector(up, -0.75 * cur.scale);
+    const fit = Math.min(1, camera.aspect / 1.1) * 0.62 + 0.38;
+    root.scale.setScalar(Math.max(0.0001, cur.scale * fit));
+  }
+
+  const clock = new THREE.Clock(); let t = 0, running = true;
+  document.addEventListener('visibilitychange', () => { running = !document.hidden; if (running) { clock.getDelta(); loop(); } });
+  const ease = x => 1 - Math.pow(1 - x, 3);
+  const k = (a, b, f) => a + (b - a) * f;
+
+  function frame(dt) {
+    const f = reduce ? 1 : 1 - Math.pow(0.0012, dt);   // frame-rate independent damping
+    const fp = Math.min(1, f * 1.8);   // position follows faster than look changes, so an anchored bowl keeps up with scrolling
+    for (const key in tgt) cur[key] = k(cur[key], tgt[key], key === 'sx' || key === 'sy' ? fp : f);
+    ptr.cx = k(ptr.cx, ptr.x, f * 0.6); ptr.cy = k(ptr.cy, ptr.y, f * 0.6);
+    if (!reduce) t += dt;
+    brothU.uTime.value = t; brothU.uSpice.value = cur.spice;
+    place();
+    root.rotation.y = t * 0.12 + ptr.cx * 0.35;
+    root.rotation.x = 0.06 + ptr.cy * 0.08;
+    const chilliShow = Math.round(2 + cur.spice * 4);
+    let ci = 0;
+    for (const it of items) {
+      const lt = Math.min(1, Math.max(0, (cur.drop - it.delay * 0.6) / 0.42));
+      const e = ease(lt);
+      it.mesh.position.lerpVectors(it.start, it.rest, e);
+      if (lt < 1) it.mesh.position.y += Math.sin(t * 1.2 + it.phase) * 0.12 * (1 - e) + Math.sin(lt * Math.PI) * 0.6;
+      else it.mesh.position.y += Math.sin(t * 1.6 + it.phase) * 0.01;
+      it.mesh.rotation.set(k(it.startRot.x + t * 0.4 * (1 - e), it.restRot.x, e), k(it.startRot.y, it.restRot.y, e), k(it.startRot.z, it.restRot.z, e));
+      if (it.kind === 'chilli') { const on = ci++ < chilliShow; it.mesh.scale.setScalar(k(it.mesh.scale.x, on ? 1 : 0.001, f)); }
+    }
+    const sp = sGeo.attributes.position.array;
+    for (let i = 0; i < SN; i++) {
+      const life = (sSeed[i] + t * 0.08) % 1; const a = sSeed[i] * 40 + t * 0.2;
+      sp[i * 3] = Math.cos(a) * (0.3 + sSeed[i] * 0.9) * (1 - life * 0.3);
+      sp[i * 3 + 1] = SURF + life * 2.6;
+      sp[i * 3 + 2] = Math.sin(a) * (0.3 + sSeed[i] * 0.6);
+    }
+    sGeo.attributes.position.needsUpdate = true;
+    sMat.opacity = 0.32 * cur.steam;
+    renderer.render(scene, camera);
+  }
+  function loop() { if (!running) return; frame(Math.min(clock.getDelta(), 0.05)); requestAnimationFrame(loop); }
+  frame(0.016); if (!reduce) loop();
+
+  return {
+    set(s) { Object.assign(tgt, s); if (reduce) { Object.assign(cur, tgt); frame(0); } },
+    get state() { return { ...tgt }; }
+  };
+}
+
+// Bend a flat box along X so beef slices curl like real thin-cut slices.
+function bendGeo(g, amt) { const p = g.attributes.position; for (let i = 0; i < p.count; i++) { const x = p.getX(i); p.setY(i, p.getY(i) + x * x * amt); } g.computeVertexNormals(); }
+
+// Soft-edged tofu cube without addons.
+class RoundedBox extends THREE.BoxGeometry {
+  constructor(s) { super(s, s, s, 4, 4, 4); const p = this.attributes.position, v = new THREE.Vector3();
+    for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i); const n = v.clone().normalize().multiplyScalar(s * 0.62); v.lerp(n, 0.28); p.setXYZ(i, v.x, v.y, v.z); }
+    this.computeVertexNormals(); }
+}
+
+// 3 Kingdoms mock: page behaviour shared by both variants.
+// GSAP + ScrollTrigger + Lenis are loaded as UMD globals before this module.
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const mobile = () => innerWidth < 760;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+
+function boot(cfg) {
+  const bowl = initBowl(document.getElementById('bowl'), cfg.bowl);
+
+  // ---------- smooth scroll (Lenis) wired to ScrollTrigger, per gsap-scrolltrigger guidance ----------
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
+  if (!reduce && window.Lenis) {
+    const lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+      const el = document.querySelector(a.getAttribute('href')); if (!el) return; e.preventDefault(); lenis.scrollTo(el, { offset: -10 });
+    }));
+  }
+
+  // ---------- process: one pinned, scrubbed timeline drives the bowl ----------
+  const proc = document.getElementById('process');
+  if (proc) {
+    const steps = [...proc.querySelectorAll('.step')];
+    const weight = document.getElementById('weight');
+    const roller = document.getElementById('roller');
+    const caption = document.getElementById('step-caption');
+    let shown = -1;
+    const update = p => {
+      proc.style.setProperty('--p', p.toFixed(4));
+      const drop = clamp(p / 0.38), w = clamp((p - 0.3) / 0.25), sp = clamp((p - 0.55) / 0.25);
+      bowl.set({ drop, spice: 0.15 + sp * 0.7, steam: 0.6 + sp * 0.6 });
+      if (weight) weight.textContent = String(Math.round(w * 500)).padStart(3, '0') + 'g';
+      const active = p < 0.3 ? 0 : p < 0.55 ? 1 : p < 0.82 ? 2 : 3;
+      steps.forEach((s, i) => s.classList.toggle('on', i === active));
+      if (caption && shown !== active) { shown = active; const st = steps[active]; caption.textContent = st.querySelector('h3').textContent + ': ' + [...st.querySelectorAll('p:not(.weigh)')].map(p => p.textContent).join(' '); }
+      if (roller) drawRoller(roller, p);
+    };
+    if (reduce) { update(1); proc.classList.add('static'); }
+    else ScrollTrigger.create({ trigger: proc, start: 'top top', end: () => '+=' + innerHeight * 2.6, pin: true, scrub: 0.6, invalidateOnRefresh: true, onUpdate: s => update(s.progress) });
+    update(0);
+  }
+
+  // ---------- bowl placement per section ----------
+  // A section can anchor the bowl to an element (data-anchor / data-anchor-m); the bowl then follows it as the page scrolls.
+  const parse = s => s.split(',').map(Number);
+  let active = null, last = '';
+  const anchorOf = sec => sec && (mobile() ? sec.dataset.anchorM : sec.dataset.anchor);
+  const follow = () => {
+    const sel = anchorOf(active); if (!sel) return;
+    const el = active.querySelector(sel); if (!el) return;
+    const r = el.getBoundingClientRect();
+    const sx = ((r.left + r.width / 2) / innerWidth) * 2 - 1, sy = -(((r.top + r.height / 2) / innerHeight) * 2 - 1);
+    const key = sx.toFixed(3) + sy.toFixed(3); if (key === last) return; last = key;
+    bowl.set({ sx, sy });
+  };
+  gsap.ticker.add(follow);
+  document.querySelectorAll('[data-bowl]').forEach(sec => {
+    const apply = () => {
+      const [sx, sy, scale] = parse(mobile() && sec.dataset.bowlM ? sec.dataset.bowlM : sec.dataset.bowl);
+      active = sec; last = '';
+      const s = { sx, sy, scale };
+      if (sec.dataset.drop) s.drop = +sec.dataset.drop;
+      if (sec.dataset.steam) s.steam = +sec.dataset.steam;
+      bowl.set(s);
+    };
+    ScrollTrigger.create({ trigger: sec, start: 'top 55%', end: 'bottom 45%', onEnter: apply, onEnterBack: apply });
+  });
+  const first = document.querySelector('[data-bowl]');
+  if (first) { active = first; const [sx, sy, scale] = parse(mobile() && first.dataset.bowlM ? first.dataset.bowlM : first.dataset.bowl); bowl.set({ sx, sy, scale, drop: 0 }); follow(); }
+
+  // ---------- one orchestrated load moment ----------
+  if (!reduce) {
+    const lines = document.querySelectorAll('[data-load]');
+    gsap.from(lines, { yPercent: 105, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: 0.07, delay: 0.15 });
+  }
+
+  fitText(); addEventListener('resize', fitText); if (document.fonts) document.fonts.ready.then(() => { fitText(); ScrollTrigger.refresh(); });
+  ScrollTrigger.refresh();
+  clockAndStatus(); setInterval(clockAndStatus, 1000);
+  ticket();
+  spiceDial(bowl);
+  document.querySelectorAll('[data-zh]').forEach(b => b.addEventListener('click', () => toast(b.dataset.zh)));
+  return bowl;
+}
+
+// Fit a line of type to its container's full measure, like set wood type.
+function fitText() {
+  document.querySelectorAll('.fit').forEach(el => {
+    const span = el.firstElementChild; if (!span) return;
+    el.style.fontSize = '';
+    const base = parseFloat(getComputedStyle(el).fontSize), w = span.getBoundingClientRect().width;
+    if (w) el.style.fontSize = (base * el.clientWidth / w * 0.998) + 'px';
+  });
+}
+
+// Polygon that gains sides as it rolls: square to circle (the reference's "bumpy road" device).
+function drawRoller(svg, p) {
+  const W = svg.viewBox.baseVal.width, H = svg.viewBox.baseVal.height;
+  const n = Math.round(4 + p * 36), r = H * 0.42, cx = r + p * (W - 2 * r), cy = H / 2, rot = p * 12;
+  const pts = []; for (let i = 0; i < n; i++) { const a = rot + i / n * Math.PI * 2; pts.push((cx + Math.cos(a) * r).toFixed(1) + ',' + (cy + Math.sin(a) * r).toFixed(1)); }
+  svg.querySelector('polygon').setAttribute('points', pts.join(' '));
+  svg.querySelector('circle').setAttribute('cx', cx.toFixed(1));
+}
+
+// Brisbane time and real opening hours: Fri 11:00 to 19:30, other days 11:00 to 19:00.
+function clockAndStatus() {
+  const now = new Date();
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-AU', { timeZone: 'Australia/Brisbane', weekday: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).formatToParts(now).map(p => [p.type, p.value]));
+  const h = +parts.hour, m = +parts.minute, day = parts.weekday;
+  const close = day === 'Fri' ? 19.5 : 19, t = h + m / 60;
+  const closeLabel = day === 'Fri' ? '7:30pm' : '7pm';
+  let status;
+  if (t >= 11 && t < close) status = { open: true, en: `Open now, till ${closeLabel}` };
+  else if (t < 11) status = { open: false, en: 'Opens 11am today' };
+  else status = { open: false, en: 'Closed, opens 11am tomorrow' };
+  document.querySelectorAll('[data-clock]').forEach(el => el.textContent = `${parts.hour}:${parts.minute}:${parts.second}`);
+  document.querySelectorAll('[data-status]').forEach(el => { el.textContent = status.en; el.closest('[data-open]')?.setAttribute('data-open', status.open); });
+  document.querySelectorAll('[data-today]').forEach(el => el.textContent = status.open ? `Open till ${closeLabel} today` : status.en);
+}
+
+// Order ticket: each add is one printed line. Honest copy: shown at the counter, no online checkout yet.
+function ticket() {
+  const lines = document.getElementById('ticket-lines'), total = document.getElementById('ticket-total'), count = document.querySelectorAll('[data-ticket-count]');
+  if (!lines) return;
+  let sum = 0, n = 0;
+  document.querySelectorAll('[data-add]').forEach(b => b.addEventListener('click', () => {
+    const [name, price] = b.dataset.add.split('|');
+    const row = document.createElement('li'); row.className = 'tline';
+    row.innerHTML = `<span>1 × ${name}</span><b>${price === 'counter' ? 'at counter' : '$' + (+price).toFixed(2)}</b>`;
+    lines.querySelector('.empty')?.remove(); lines.appendChild(row);
+    if (price !== 'counter') sum += +price; n++;
+    total.textContent = '$' + sum.toFixed(2);
+    count.forEach(c => c.textContent = n);
+    toast(`Added ${name}. ${n} ${n === 1 ? 'item' : 'items'} on your ticket.`);
+    b.classList.remove('pressed'); void b.offsetWidth; b.classList.add('pressed');
+  }));
+}
+
+// Draggable chilli: sets the spice level 1 to 6 and re-tints the broth. Keyboard: arrows, Home, End.
+function spiceDial(bowl) {
+  const track = document.getElementById('spice-track'), knob = document.getElementById('spice-knob'), label = document.getElementById('spice-label');
+  if (!track) return;
+  let v = 3;
+  const set = (nv, fromDrag) => {
+    v = Math.min(6, Math.max(1, nv));
+    knob.style.setProperty('--x', ((v - 1) / 5).toFixed(3));
+    knob.setAttribute('aria-valuenow', v); knob.setAttribute('aria-valuetext', `Level ${v} of 6`);
+    label.textContent = `Level ${v} of 6`;
+    bowl.set({ spice: (v - 1) / 5, drop: 1 });
+    track.style.setProperty('--v', (v - 1) / 5);
+  };
+  const fromX = x => { const r = track.getBoundingClientRect(); return Math.round(clamp((x - r.left) / r.width) * 5) + 1; };
+  let drag = false;
+  knob.addEventListener('pointerdown', e => { drag = true; knob.setPointerCapture(e.pointerId); knob.classList.add('grab'); });
+  knob.addEventListener('pointermove', e => { if (drag) set(fromX(e.clientX), true); });
+  knob.addEventListener('pointerup', () => { drag = false; knob.classList.remove('grab'); });
+  track.addEventListener('click', e => { if (e.target === track || e.target.classList.contains('stop')) set(fromX(e.clientX)); });
+  knob.addEventListener('keydown', e => {
+    const m = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 };
+    if (m[e.key]) { set(v + m[e.key]); e.preventDefault(); }
+    if (e.key === 'Home') { set(1); e.preventDefault(); } if (e.key === 'End') { set(6); e.preventDefault(); }
+  });
+  set(3);
+}
+
+function toast(msg) {
+  let t = document.getElementById('toast');
+  if (!t) { t = document.createElement('div'); t.id = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
+  t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+boot({ bowl: {"style": "gloss", "bowlColor": 1511695, "rimColor": 13572907, "steamColor": 14208199, "food": {"beef": 9059116, "tofu": 15918792, "green": 6261290, "greenLight": 12177274, "chilli": 14099998, "pepper": 4856594, "noodle": 15785128, "herb": 5209898}} });
+</script>
